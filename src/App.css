@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .App-logo {
@@ -34,5 +36,29 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+/* //<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<{<>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}>}> */
+.posts {
+  columns: 2;
+  justify-content: center;
+  gap: 20px;
+}
+.post {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.4);
+  padding: 15px;
+  border-radius: 1rem;
+  margin-bottom: 20px;
+  & button {
+    background-color: #f9f9f9;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    &:hover {
+      color: red;
+    }
   }
 }
