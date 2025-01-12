@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Posts } from "./components/posts";
 import Timer from "./components/Timer/Timer";
+import { Form } from "./components/Form";
 
 export class App extends Component {
   state = {
@@ -26,8 +27,9 @@ export class App extends Component {
     const { posts } = this.state;
     return (
       <div className="App">
-        <Timer />;
-        <Posts cb={this.handleClose} posts={posts} />;
+        {/* <Timer />; */}
+        {/* <Posts cb={this.handleClose} posts={posts} />; */}
+        <Form />;
       </div>
     );
   }
