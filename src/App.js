@@ -4,6 +4,8 @@ import "./App.css";
 import { Posts } from "./components/posts";
 import Timer from "./components/Timer/Timer";
 import { Form } from "./components/Form";
+import { Subscription } from "./components/subcription";
+import { FormWithRef } from "./components/FormWithRef";
 
 export class App extends Component {
   state = {
@@ -27,9 +29,10 @@ export class App extends Component {
     const { posts } = this.state;
     return (
       <div className="App">
-        {/* <Timer />; */}
-        {/* <Posts cb={this.handleClose} posts={posts} />; */}
-        <Form />;
+        <Timer />;{/* <Posts cb={this.handleClose} posts={posts} />; */}
+        {/* <Form />; */}
+        {/* <Subscription />; */}
+        {/* <FormWithRef />; */}
       </div>
     );
   }

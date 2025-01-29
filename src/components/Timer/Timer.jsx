@@ -1,80 +1,80 @@
-import { Component } from "react";
-
 import "./Timer.css";
 import logo from "../../logo.svg";
+import { useEffect, useState, useRef } from "react";
 
-class Timer extends Component {
-  state = {
-    count: 0,
-    isCounting: false,
-    class: "start",
-  };
+const userCount = localStorage.getItem("timer");
 
-  componentDidMount() {
-    const userCount = localStorage.getItem("timer");
-    if (userCount) {
-      this.setState({ count: +userCount });
-    }
-  }
+const Timer = () => {
+  const [count, setCount] = useState(0);
+  const [isCounting, setIsCounting] = useState(false);
+  const [classBtn, setClassBtn] = useState("start");
 
-  componentDidUpdate() {
-    localStorage.setItem("timer", this.state.count);
-  }
+  const counterId = useRef(null);
 
-  componentWillUnmount() {
-    clearInterval(this.counterId);
-  }
+  const handleStart = () => {
+    setIsCounting(true);
+    setClassBtn("stop");
 
-  handleStart = () => {
-    this.setState({ isCounting: true, class: "stop" });
-
-    this.counterId = setInterval(() => {
-      this.setState({ count: this.state.count + 1 });
+    counterId.current = setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
     }, 1000);
   };
 
-  handleStop = () => {
-    this.setState({ isCounting: false });
+  const handleStop = () => {
+    setIsCounting(false);
 
-    clearInterval(this.counterId);
-    this.setState({ class: "start" });
+    clearInterval(counterId.current);
+    setClassBtn("start");
   };
 
-  handleReset = () => {
-    this.setState({ isCounting: false, count: 0 });
+  const handleReset = () => {
+    setIsCounting(false);
+    setCount(0);
 
-    clearInterval(this.counterId);
-    this.setState({ class: "start" });
+    clearInterval(counterId.current);
+    setClassBtn("start");
   };
 
-  render() {
-    return (
-      <div className="timer">
-        <h2>React timer</h2>
-        <img
-          onMouseEnter={(e) => (e.target.className = "drive")}
-          className={this.state.isCounting ? "logo drive" : "logo"}
-          src={logo}
-          alt="Logo"
-        />
-        <div className="display">{this.state.count}</div>
-        <div className="actions">
-          {!this.state.isCounting ? (
-            <button onClick={this.handleStart} className={this.state.class}>
-              Start
-            </button>
-          ) : (
-            <button onClick={this.handleStop} className={this.state.class}>
-              Stop
-            </button>
-          )}
-          <button onClick={this.handleReset} className="reset">
-            Reset
+  useEffect(() => {
+    if (userCount) {
+      setCount(+userCount);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("timer", count);
+  }, [count]);
+
+  useEffect(() => {
+    return () => clearInterval(counterId.current);
+  }, []);
+
+  return (
+    <div className="timer">
+      <h2>React timer</h2>
+      <img
+        onMouseEnter={(e) => (e.target.className = "drive")}
+        className={isCounting ? "logo drive" : "logo"}
+        src={logo}
+        alt="Logo"
+      />
+      <div className="display">{count}</div>
+      <div className="actions">
+        {!isCounting ? (
+          <button onClick={handleStart} className={classBtn}>
+            Start
           </button>
-        </div>
+        ) : (
+          <button onClick={handleStop} className={classBtn}>
+            Stop
+          </button>
+        )}
+        <button onClick={handleReset} className="reset">
+          Reset
+        </button>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Timer;
